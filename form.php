@@ -1,13 +1,3 @@
-<?php
-
-include_once "conexao.php";
-
-$sql = "SELECT * FROM events ORDER BY id DESC";
-
-$result = $conexao-> query($sql);
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -44,25 +34,22 @@ $result = $conexao-> query($sql);
             padding-left: 10px;
             margin-bottom: 20px; 
         }
-        button{
+        .enviar{
             height: 45px; 
             padding-left: 5px;
             padding-right: 5px; 	
             margin-bottom: 20px; 
             margin-top: 10px; 	
             text-transform: uppercase;
-            background-color: #ab4493; 
-            border-color: #ab4493; 
+            background-color: black; 
+            border-color: black; 
             border-style: solid; 
             border-radius: 10px;	
             width: 420px;   
             cursor: pointer;
+            color: white;
         }
 
-        .table-bg{
-            background:rgb(0, 0, 0,0.3);
-            border-radius: 15px 15px 0px 0px;
-        }
 
     </style>
 
@@ -71,9 +58,13 @@ $result = $conexao-> query($sql);
 <body>
     <a href="/test/index.php">voltar pro calendario </a>
 
+    
+
     <h2>Criar Nova Missão</h2>
     
     <div class="box">
+
+    <h2>Criar Nova Missão</h2>
 
         <form id="form" method="POST">
               
@@ -85,7 +76,7 @@ $result = $conexao-> query($sql);
 
                 <p>color:</p>
                 <select name="color" class="inputUser" id="color">
-                        <option value="">Selecionar</option>
+                    
                         <option value="#1F438C">azul</option>
                 </select>
                 
@@ -106,50 +97,70 @@ $result = $conexao-> query($sql);
     </div>
 
 
-    <div class="m-5 table-bg ">
-            <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">title</th>
-                <th scope="col">color</th>
-                <th scope="col">start</th>
-                <th scope="col">end</th>
-                <th scope="col">...</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                while($user_data = mysqli_fetch_assoc($result))
-                {
-                    echo "<tr>";
-                    echo "<td>".$user_data['id']."</td>";
-                    
-                    echo "<td>".$user_data['title']."</td>";
-                    
-                    echo "<td>".$user_data['color']."</td>";
-                    echo "<td>".$user_data['start']."</td>";
-                    echo "<td>".$user_data['end']."</td>";
-                    echo 
-                    "<td>
-                        <a class = 'btn btn-primary' href = 'editMissions.php?id=$user_data[id]'>
-                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-fill' viewBox='0 0 16 16'>
-                            <path d='M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z'/>
-                        </svg>
-                        </a>
-                    </td>";
-                    echo "<tr>";
-                }
+   
 
+    <div class="container ">
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div>
+                <h1>Tabela missões</h1>
+                </div>
+            </div>
+        </div>
+        <hr>
 
-            ?>
-           
-        </tbody>
-        </table>
+        <div class="row">
+
+            <div class="col-lg-12">
+
+                <span class="listar_missions"></span>
+                
+            </div>
+
+        </div>
+
     </div>
 
 
+    <div class="modal fade" id="visualizarMissions" tabindex="-1" aria-labelledby="visualizarMissions" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="visualizarMissions">Detalhes da Missão </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span id="msgAlertaErroVis"></span>
+                    <dl class="row">
+
+                        <dt class="col-sm-3">ID:</dt>
+                        <dd class="col-sm-9"><span id="idId"></span></dd>
+
+                        <dt class="col-sm-3">Missão:</dt>
+                        <dd class="col-sm-9"><span id="idTitle"></span></dd>
+
+                        <dt class="col-sm-3">Cor:</dt>
+                        <dd class="col-sm-9"><span id="idColor"></span></dd>
+                        
+                        <dt class="col-sm-3">Início:</dt>
+                        <dd class="col-sm-9"><span id="idStart"></span></dd>
+
+                        <dt class="col-sm-3">Término</dt>
+                        <dd class="col-sm-9"><span id="idEnd"></span></dd>
+
+                    </dl>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="js/bootstrap5/index.global.min.js"></script>
+
     <script>
+
+        //java pra enviar formulario
         const form = document.querySelector('#form');
         
         form.addEventListener('submit', async (e) => {
@@ -165,10 +176,58 @@ $result = $conexao-> query($sql);
         
         });
 
+        //java pra mostrar a tabela
        const resposta =  await dados.json();
        console.log(resposta);
 
         });
+
+        const tbody = document.querySelector(".listar_missions");
+
+        const listarMissions = async (pagina) => {
+          const dadosMissions =  await fetch ("./tabelaMissions.php?pagina=" + pagina);
+          const respostaMissions = await dadosMissions.text();
+          tbody.innerHTML = respostaMissions;
+
+        }
+
+        listarMissions(1);
+
+        //javaSc para visualizar pessoa da tabela
+        
+        const msgAlerta= document.getElementById("msgAlerta")
+        async function visualizarUsuario(id){
+            
+            const dados = await fetch('visualizarMissions.php?id=' + id);
+            const resposta = await dados.json();
+            console.log(resposta);
+
+            if(resposta['erro']){
+                msgAlerta.innerHTML = resposta['msg']
+            }else{
+                const viswModal = new bootstrap.Modal(document.getElementById("visualizarMissions"));
+                viswModal.show();
+
+                
+                document.getElementById("idId").innerHTML = resposta['dados'].id
+                document.getElementById("idTitle").innerHTML = resposta['dados'].title
+                document.getElementById("idColor").innerHTML = resposta['dados'].color
+                document.getElementById("idStart").innerHTML = resposta['dados'].start
+                document.getElementById("idEnd").innerHTML = resposta['dados'].end
+            }
+         }
+ 
+
+
+
+
+        //java pra editar
+
+        async function editUsuarioDados(id){
+            const dados = await fetch
+        }
+
+
     </script>
 
     
