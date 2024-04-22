@@ -20,7 +20,7 @@ if(!empty($pagina)){
 
 
         $dados_missions ="<div class='table-responsive'>
-        <table class='table table-striped table-bordered'>
+        <table class='table table-striped table-bordered  table table-bordered border-white table-dark'>
             <thead>
                 <tr>
                     <th scope='col'>id</th>
@@ -40,14 +40,15 @@ if(!empty($pagina)){
                 
             $dados_missions .= "<tr>
 
-            <td>$id</td>
+            <td >$id</td>
             <td>$title</td>
             <td>$color</td>
             <td>$start</td>
             <td>$end</td>
             <td>
-            <button id='$id' class='btn btn-outline-primary btn-sm' onclick ='visualizarUsuario($id)'>Visualizar</button>
-            <button id='$id' class='btn btn-outline-primary btn-sm' onclick ='editUsuarioDados($id)'>Editar</button>
+            <button id='$id' class='btn btn-success btn-sm' onclick ='visualizarUsuario($id)'>Visualizar</button>
+            <button id='$id' class='btn btn-warning btn-sm' onclick ='editUsuarioDados($id)'>Editar</button>
+            <button id='$id' class='btn btn-danger btn-sm' onclick ='apagarUsuarioDados($id)'>Deletar</button>
             </td>
             
             
